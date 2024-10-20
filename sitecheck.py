@@ -78,16 +78,34 @@ class ConnectionManager:
         ):  # Use the context manager to open and automatically close the connection
             for attempt in range(retries):
                 try:
+                    # Send the request with the specified method (HEAD, GET, etc.)
                     self.connection.request(
                         method=method,
                         url=self.parsed_url.path or "/",
                         body=self.body,
                         headers=self.headers,
                     )
+
+                    # Get the response
                     response: http.client.HTTPResponse = self.connection.getresponse()
+
+                    # Extract the HTTP status code, reason phrase, and headers
                     status_code: int = response.status
                     reason: str = response.reason
                     headers: list[tuple[str, str]] = response.getheaders()
+
+                    # Handle redirects (301, 302, 303, 307, 308)
+                    if status_code in {301, 302, 303, 307, 308}:
+                        log.info(f"Redirected: {status_code} {reason}")
+                        location = response.getheader("Location")
+                        if location:
+                            log.info(f"Following redirect to: {location}")
+                            # Update the URL and retry the request
+                            self.parsed_url = urllib.parse.urlparse(location)
+                            self.connection.close()  # Close the previous connection
+                            self.connection = None  # Reset the connection
+                            return self.send_request(method, sleep, retries)
+
                     return {
                         "status_code": status_code,
                         "reason": reason,
@@ -97,16 +115,18 @@ class ConnectionManager:
                 except gaierror as invalid_site:
                     msg = f"({type(invalid_site)}) Invalid site address: '{self.parsed_url.geturl()}'."
                     log.error(msg)
-                    return None  # Return None to indicate failure
+                    raise invalid_site
 
                 except Exception as exc:
                     msg = f"({type(exc)}) Error connecting to URL: {self.parsed_url.geturl()}. Attempt {attempt + 1}/{retries} failed. Details: {exc}"
                     log.error(msg)
 
+                    # If this was not the last attempt, wait for the specified sleep duration
                     if attempt < retries - 1:
                         log.info(f"Retrying in {sleep} seconds...")
                         time.sleep(sleep)
 
+            # If all retries failed, raise an exception
             raise Exception(
                 f"Failed to connect to {self.parsed_url.geturl()} after {retries} attempts."
             )
