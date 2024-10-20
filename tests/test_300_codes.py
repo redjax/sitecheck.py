@@ -14,16 +14,6 @@ logging.basicConfig(
 )
 
 
-@pytest.fixture()
-def sleep_time() -> int:
-    return 5
-
-
-@pytest.fixture()
-def retry_times() -> int:
-    return 3
-
-
 #######
 # 300 #
 #######
