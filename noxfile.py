@@ -33,9 +33,21 @@ def install_uv_project(session: nox.Session, external: bool = False) -> None:
     log.info("Installing uv in session")
     session.install("uv")
     log.info("Syncing uv project")
-    session.run("uv", "sync", external=external)
+    session.run("uv", "sync", external=external, env={"PYTHON_VERSION": session.python})
     log.info("Installing project")
-    session.run("uv", "pip", "install", ".", external=external)
+    session.run(
+        "uv",
+        "pip",
+        "install",
+        ".",
+        external=external,
+        env={"PYTHON_VERSION": session.python},
+    )
+
+
+@nox.session(name="dev-environment", tags=["setup"])
+def setup_dev_environment(session: nox.Session):
+    install_uv_project(session=session)
 
 
 @nox.session(name="lint", tags=["quality"])
