@@ -1,5 +1,6 @@
-import pytest
+from __future__ import annotations
 
+import pytest
 
 @pytest.fixture()
 def sleep_time() -> int:

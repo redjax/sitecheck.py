@@ -1,11 +1,13 @@
+from __future__ import annotations
+
 import logging
 import typing as t
 
 log = logging.getLogger(__name__)
 
-import pytest
-
 from sitecheck import ConnectionManager, HTTPResponse
+
+import pytest
 
 logging.basicConfig(
     level="INFO",
