@@ -19,16 +19,28 @@ nox.options.error_on_missing_interpreters = False
 # nox.options.report = True
 
 ## Define sessions to run when no session is specified
-nox.sessions = ["lint"]
+nox.sessions = ["lint", "tests"]
+
+## Define versions to test
+PY_VERSIONS: list[str] = ["3.12", "3.11"]
 
 ## Set paths to lint with the lint session
 LINT_PATHS: list[str] = ["sitecheck.py", "tests"]
 
 
+def install_uv_project(session: nox.Session, external: bool = False) -> None:
+    """Method to install uv and the current project in a nox session."""
+    log.info("Installing uv in session")
+    session.install("uv")
+    log.info("Syncing uv project")
+    session.run("uv", "sync", external=external)
+    log.info("Installing project")
+    session.run("uv", "pip", "install", ".", external=external)
+
+
 @nox.session(name="lint", tags=["quality"])
 def run_linter(session: nox.Session):
-    session.install("ruff")
-    session.install("black")
+    install_uv_project(session=session)
 
     log.info("Linting code")
     for d in LINT_PATHS:
@@ -47,12 +59,6 @@ def run_linter(session: nox.Session):
                 "--fix",
             )
 
-            log.info(f"Formatting '{d}' with Black")
-            session.run(
-                "black",
-                lint_path,
-            )
-
             log.info(f"Running ruff checks on '{d}' with --fix")
             session.run(
                 "ruff",
@@ -67,4 +73,21 @@ def run_linter(session: nox.Session):
         "check",
         f"{Path('./noxfile.py')}",
         "--fix",
+    )
+
+
+@nox.session(python=PY_VERSIONS, name="tests", tags=["test", "quality"])
+def run_tests(session: nox.Session):
+    install_uv_project(session=session)
+
+    log.info("Running Pytest tests")
+    session.run(
+        "uv",
+        "run",
+        "pytest",
+        "-n",
+        "auto",
+        "--tb=native",
+        "-v",
+        "-rasXxfP",
     )

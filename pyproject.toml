@@ -6,6 +6,16 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+## The code is under src/cf_manager/<package_name>
+#  Tell the build system to look into src/cf_manager for
+#  the code to build
+packages = ["sitecheck.py"]
+
 [tool.ruff]
 target-version = "py311"
 line-length = 88
@@ -93,8 +103,4 @@ section-order = [
 ]
 
 [tool.uv]
-dev-dependencies = [
-    "nox>=2024.10.9",
-    "pytest-xdist>=3.6.1",
-    "ruff>=0.7.0",
-]
+dev-dependencies = ["nox>=2024.10.9", "pytest-xdist>=3.6.1", "ruff>=0.7.0"]
