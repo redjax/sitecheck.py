@@ -1,5 +1,5 @@
 [project]
-name = "site-checker"
+name = "sitecheck"
 version = "0.1.0"
 description = "Python CLI for checking availability of a website."
 readme = "README.md"
@@ -103,4 +103,20 @@ section-order = [
 ]
 
 [tool.uv]
-dev-dependencies = ["nox>=2024.10.9", "pytest-xdist>=3.6.1", "ruff>=0.7.0"]
+dev-dependencies = [
+    "nox>=2024.10.9",
+    "pex>=2.20.3",
+    "pytest-xdist>=3.6.1",
+    "ruff>=0.7.0",
+    "vulture>=2.13",
+]
+
+[tool.vulture]
+exclude = ["dist/", "release/"]
+# ignore_decorators = ["@app.route", "@require_*"]
+# ignore_names = ["visit_*", "do_*"]
+make_whitelist = true
+min_confidence = 80
+paths = ["noxfile.py", "sitecheck.py"]
+sort_by_size = true
+verbose = false

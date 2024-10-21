@@ -64,6 +64,8 @@ class ConnectionManager:
         self.headers: dict = headers or {}
         self.body: bytes = self._prepare_body(body)
 
+        self.trace = None
+
     def _ensure_schema(self, url) -> urllib.parse.ParseResult | t.Any:
         parsed = urllib.parse.urlparse(url)
         if not parsed.scheme:
@@ -91,7 +93,16 @@ class ConnectionManager:
     def __exit__(self, exc_type, exc_val, traceback) -> bool:
         if self.connection:
             self.connection.close()
-        return True  # Allow exception propagation
+
+        if exc_val:
+            msg = f"({exc_type}) {exc_val}"
+            log.error(msg)
+
+            self.trace = traceback
+
+            return False
+
+        return True
 
     def send_request(self, method: str, sleep: int, retries: int) -> dict[str, t.Any]:
         log.info(f"Sending {method} request to URL: {self.parsed_url.geturl()}")
