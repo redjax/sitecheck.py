@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture()
 def sleep_time() -> int:
-    return 5
+    return 2
 
 
 @pytest.fixture()
