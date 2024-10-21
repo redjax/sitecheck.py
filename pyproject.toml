@@ -108,4 +108,15 @@ dev-dependencies = [
     "pex>=2.20.3",
     "pytest-xdist>=3.6.1",
     "ruff>=0.7.0",
+    "vulture>=2.13",
 ]
+
+[tool.vulture]
+exclude = ["dist/", "release/"]
+# ignore_decorators = ["@app.route", "@require_*"]
+# ignore_names = ["visit_*", "do_*"]
+make_whitelist = true
+min_confidence = 80
+paths = ["noxfile.py", "sitecheck.py"]
+sort_by_size = true
+verbose = false

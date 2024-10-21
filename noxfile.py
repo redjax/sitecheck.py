@@ -196,3 +196,14 @@ def build_compile_pex(session: nox.Session) -> None:
     except Exception as exc:
         msg = f"({type(exc)}) Error compiling script to .pex file. Details: {exc}"
         log.error(msg)
+
+
+@nox.session(name="vulture-check", tags=["coverage", "quality"])
+def vulture_check(session: nox.Session):
+    install_uv_project(session)
+
+    log.info("Installing vulture for dead code checking")
+    session.install("vulture")
+
+    log.info("Running vulture")
+    session.run("vulture")
