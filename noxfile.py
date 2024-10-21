@@ -138,6 +138,30 @@ def run_tests(session: nox.Session) -> None:
     )
 
 
+@nox.session(python=PY_VERSIONS, name="tests-pipeline", tags=["test", "quality"])
+def run_tests_in_pipeline(session: nox.Session) -> None:
+    """Run a subset of the project's pytest tests with `pytest-xdist` for concurrent test execution."""
+    install_uv_project(session=session)
+
+    ## Ensure pytest-xdist is installed
+    log.info("Install pytest-xdist for concurrent test execution")
+    session.install("pytest-xdist")
+
+    ## Run tests with pytest-xdist, running multiple tests at once
+    log.info("[Pipeline] Running a subset of project's Pytest tests in a CI pipeline")
+    session.run(
+        "uv",
+        "run",
+        "pytest",
+        "tests/test_pipeline_tests.py",
+        "-n",
+        "auto",
+        "--tb=native",
+        "-v",
+        "-rasXxfP",
+    )
+
+
 @nox.session(name="compile-pex", tags=["pex"])
 def compile_pex(session: nox.Session) -> None:
     """Compile script into a pex file (self-contained executable)."""

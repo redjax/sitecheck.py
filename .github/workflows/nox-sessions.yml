@@ -48,7 +48,7 @@ jobs:
 
       ## Run pytest tests
       - name: Run nox tests
-        run: uv run pytest tests/
+        run: uv run pytest tests/test_pipeline_tests.py
 
       ## Run vulture code coverage check. Continue on error instead of failing pipeline
       - name: Vulture code check
