@@ -1,9 +1,31 @@
+"""Make a request to a given site to test availability.
+
+Description:
+    Call the script, passing args to set a site, method, & optional success/failure codes.
+    The script will make a `HEAD` request to the site, expecting a `200: OK` response, and retrying
+    a specified number of times before determining site is offline.
+    
+    Check the available options with `sitecheck.py --help`.
+    
+Usage:
+    - `-h`/`--help`: Show help message
+    - `--site SITE`: Set the site address to request, i.e. `https://www.google.com`
+    - `--method`: (Optional, default=`HEAD`) The HTTP method type, i.e. `GET`, `HEAD`, etc.
+    - `--success-codes SUCCESS_CODES`: (Optional, default=<predefined list>) Specify success codes, i.e. `--success-codes 200 201 202`.
+    - `--failure-codes FAILURE_CODES`: (Optional, default=<predefined list>) Specify failure codes, i.e. `--failure-codes 400, 404, 500`.
+    - `--headers HEADERS`: (Optional, default=None): Pass request headers, i.e. `--headers '{"Content-Type": "application/json", "Authorization": "Bearer: <api-key>"}'
+    - `--body BODY`: (Optional, default=`None`): Pass a request body, i.e. `--body '{"someKey": "someValue"}'`. The body must be quoted, and
+        will be converted to JSON for the request.
+    - `--sleep SLEEP`: (default=5) Time in seconds to pause between retries.
+    - `--retries RETRIES`: (default=3) Number of retries on error.
+    
+"""
+
 from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass, field
 import http.client
-from http.client import CannotSendHeader, CannotSendRequest, NotConnected
 import json
 import logging
 from socket import gaierror
@@ -36,6 +58,7 @@ class ConnectionManager:
         body: t.Union[dict, str] | None = None,
     ) -> None:
         self.logger: logging.Logger = log.getChild("ConnectionManager")
+
         self.connection = None
         self.parsed_url: urllib.parse.ParseResult | t.Any = self._ensure_schema(url)
         self.headers: dict = headers or {}
@@ -88,6 +111,7 @@ class ConnectionManager:
 
                     # Get the response
                     response: http.client.HTTPResponse = self.connection.getresponse()
+                    log.info(f"Response: [{response.status}]")
 
                     # Extract the HTTP status code, reason phrase, and headers
                     status_code: int = response.status
@@ -133,12 +157,16 @@ class ConnectionManager:
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse CLI args passed to the script."""
+
+    ## Initialize parser
     parser = argparse.ArgumentParser(
         description="Check a website's status with HEAD request."
     )
 
-    # Arguments for site URL, method (for future extensions), success codes, and failure codes
+    ## Site URL to request
     parser.add_argument("--site", required=True, help="URL of the site to check.")
+    ## Request method
     parser.add_argument(
         "--method",
         default="HEAD",
@@ -146,6 +174,7 @@ def parse_args() -> argparse.Namespace:
         type=str.upper,
         help="HTTP method to use (i.e. GET, POST, HEAD).",
     )
+    ## List of codes that qualify as a succcessful response
     parser.add_argument(
         "--success-codes",
         nargs="+",
@@ -153,6 +182,7 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_HTTP_SUCCESS_CODES,
         help="List of HTTP success codes.",
     )
+    ## List of codes that qualify as a failure response
     parser.add_argument(
         "--failure-codes",
         nargs="+",
@@ -160,21 +190,26 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_HTTP_FAILURE_CODES,
         help="List of HTTP failure codes.",
     )
+    ## Headers dict (formatted as a string, i.e. '{"Key-Name": "Key-Value"}')
+    parser.add_argument("--headers", type=str, default=None, help="Headers dict")
+    ## Body dict (formatted as a string, i.e. '{"Body-Name": "Body-Value"}')
     parser.add_argument(
         "--body",
         type=str,
         help="Optional request body as a JSON string.",
     )
+    ## Number of seconds to sleept between requests
     parser.add_argument(
         "--sleep",
         type=int,
         default=5,
         help="Number of seconds to wait before retrying.",
     )
+    ## Number of retries when failure
     parser.add_argument(
         "--retries",
         type=int,
-        default=3,
+        default=1,
         help="Number of retry attempts for failed requests.",
     )
 

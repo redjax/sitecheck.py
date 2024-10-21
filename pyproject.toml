@@ -1,7 +1,7 @@
 [project]
 name = "site-checker"
 version = "0.1.0"
-description = "Add your description here"
+description = "Python CLI for checking availability of a website."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
