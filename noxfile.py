@@ -18,6 +18,7 @@ from __future__ import annotations
 import importlib.util
 import logging
 from pathlib import Path
+import platform
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -41,6 +42,8 @@ PY_VERSIONS: list[str] = ["3.12", "3.11"]
 
 ## Set paths to lint with the lint session
 LINT_PATHS: list[str] = ["sitecheck.py", "tests"]
+
+OS_TYPE = platform.system()
 
 
 def install_uv_project(session: nox.Session, external: bool = False) -> None:
@@ -135,3 +138,68 @@ def run_tests(session: nox.Session) -> None:
         "-v",
         "-rasXxfP",
     )
+
+
+@nox.session(name="compile-pex", tags=["pex"])
+def compile_pex(session: nox.Session) -> None:
+    """Compile script into a pex file (self-contained executable)."""
+    if OS_TYPE == "Windows":
+        log.warning("Compiling to .pex is not compatible with Windows.")
+        
+        return
+    
+    install_uv_project(session)
+    
+    SCRIPT_PATH: Path = Path("./sitecheck.py")
+    SCRIPT_NAME: str = SCRIPT_PATH.stem
+    PEX_OUTPUT: Path = Path("./dist/sitecheck.pex")
+    
+    if not PEX_OUTPUT.parent.exists():
+        try:
+            PEX_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+        except Exception as exc:
+            msg = f"({type(exc)}) Error creating path '{PEX_OUTPUT.parent}'. Details: {exc}"
+            log.error(msg)
+            
+            return
+            
+    
+    log.info("Compiling script into .pex file")
+    session.run("uv", "run", "pex", ".", "-m", SCRIPT_NAME, "-o", PEX_OUTPUT)
+
+
+@nox.session(name="build-compile-pex", tags=["pex"])
+def build_compile_pex(session: nox.Session) -> None:
+    """Compile script into a pex file (self-contained executable)."""
+    if OS_TYPE == "Windows":
+        log.warning("Compiling to .pex is not compatible with Windows.")
+        
+        return
+    
+    install_uv_project(session)
+    
+    log.info(f"Install Python {session.python_version}")
+    
+    log.info("Building project before compiling to .pex")
+    session.run("uv", "build")
+    
+    SCRIPT_PATH: Path = Path("./sitecheck.py")
+    SCRIPT_NAME: str = SCRIPT_PATH.stem
+    SCRIPT_ENTRYPOINT: str = "main"
+    # PEX_OUTPUT: Path = Path("./dist/sitecheck.pex")
+    PEX_OUTPUT: Path = Path("./dist/testapp.pex")
+    
+    
+    if not PEX_OUTPUT.parent.exists():
+        try:
+            PEX_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+        except Exception as exc:
+            msg = f"({type(exc)}) Error creating path '{PEX_OUTPUT.parent}'. Details: {exc}"
+            log.error(msg)
+            
+            return
+            
+    
+    log.info("Compiling script into .pex file")
+    session.run("uv", "run", "pex", "dist/*.whl", "-m", f"{SCRIPT_NAME}:{SCRIPT_ENTRYPOINT}", "-o", PEX_OUTPUT)
+    

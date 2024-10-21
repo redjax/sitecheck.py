@@ -103,4 +103,9 @@ section-order = [
 ]
 
 [tool.uv]
-dev-dependencies = ["nox>=2024.10.9", "pytest-xdist>=3.6.1", "ruff>=0.7.0"]
+dev-dependencies = [
+    "nox>=2024.10.9",
+    "pex>=2.20.3",
+    "pytest-xdist>=3.6.1",
+    "ruff>=0.7.0",
+]

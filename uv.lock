@@ -92,6 +92,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pex"
+version = "2.20.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/77/fe/10da6c9403dff50f839bff726b9554f51c5789561e7c8cb005ab2bcadd3b/pex-2.20.3.tar.gz", hash = "sha256:3aa7a2646407a1133303d0dfe37c1cb1312dc1a420b5df4da75aefdb184ca657", size = 4388509 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/17/6f/5bc8739c9b1bb6ddd9885606278740d6f2b84b457730886fc17a46cb34e3/pex-2.20.3-py2.py3-none-any.whl", hash = "sha256:f9bb815340481f58276e641fcac84a0b2b6d9327fe675e1ec620d11062636003", size = 3522709 },
+]
+
+[[package]]
 name = "platformdirs"
 version = "4.3.6"
 source = { registry = "https://pypi.org/simple" }
@@ -170,6 +179,7 @@ source = { editable = "." }
 [package.dev-dependencies]
 dev = [
     { name = "nox" },
+    { name = "pex" },
     { name = "pytest-xdist" },
     { name = "ruff" },
 ]
@@ -179,6 +189,7 @@ dev = [
 [package.metadata.requires-dev]
 dev = [
     { name = "nox", specifier = ">=2024.10.9" },
+    { name = "pex", specifier = ">=2.20.3" },
     { name = "pytest-xdist", specifier = ">=3.6.1" },
     { name = "ruff", specifier = ">=0.7.0" },
 ]
