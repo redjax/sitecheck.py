@@ -19,6 +19,7 @@ import importlib.util
 import logging
 from pathlib import Path
 import platform
+import glob
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -53,16 +54,6 @@ def install_uv_project(session: nox.Session, external: bool = False) -> None:
 
     log.info("Syncing uv project")
     session.run("uv", "sync", external=external, env={"PYTHON_VERSION": session.python})
-
-    log.info("Installing project")
-    session.run(
-        "uv",
-        "pip",
-        "install",
-        ".",
-        external=external,
-        env={"PYTHON_VERSION": session.python},
-    )
 
 
 @nox.session(name="dev-environment", tags=["setup"])
@@ -145,25 +136,24 @@ def compile_pex(session: nox.Session) -> None:
     """Compile script into a pex file (self-contained executable)."""
     if OS_TYPE == "Windows":
         log.warning("Compiling to .pex is not compatible with Windows.")
-        
+
         return
-    
+
     install_uv_project(session)
-    
+
     SCRIPT_PATH: Path = Path("./sitecheck.py")
     SCRIPT_NAME: str = SCRIPT_PATH.stem
     PEX_OUTPUT: Path = Path("./dist/sitecheck.pex")
-    
+
     if not PEX_OUTPUT.parent.exists():
         try:
             PEX_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
         except Exception as exc:
             msg = f"({type(exc)}) Error creating path '{PEX_OUTPUT.parent}'. Details: {exc}"
             log.error(msg)
-            
+
             return
-            
-    
+
     log.info("Compiling script into .pex file")
     session.run("uv", "run", "pex", ".", "-m", SCRIPT_NAME, "-o", PEX_OUTPUT)
 
@@ -173,33 +163,39 @@ def build_compile_pex(session: nox.Session) -> None:
     """Compile script into a pex file (self-contained executable)."""
     if OS_TYPE == "Windows":
         log.warning("Compiling to .pex is not compatible with Windows.")
-        
         return
-    
+
     install_uv_project(session)
-    
-    log.info(f"Install Python {session.python_version}")
-    
+    log.info(f"Install Python {platform.python_version()}")
+    session.run("uv", "python", "install", platform.python_version())
     log.info("Building project before compiling to .pex")
     session.run("uv", "build")
-    
+    log.info("Ensure pex is installed")
+    session.install("pex")
+
     SCRIPT_PATH: Path = Path("./sitecheck.py")
     SCRIPT_NAME: str = SCRIPT_PATH.stem
     SCRIPT_ENTRYPOINT: str = "main"
-    # PEX_OUTPUT: Path = Path("./dist/sitecheck.pex")
-    PEX_OUTPUT: Path = Path("./dist/testapp.pex")
-    
-    
+    PEX_MODULE_STR: str = "sitecheck:main"
+    PEX_OUTPUT: Path = Path("./release/sitecheck.pex")
+
     if not PEX_OUTPUT.parent.exists():
         try:
             PEX_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
         except Exception as exc:
             msg = f"({type(exc)}) Error creating path '{PEX_OUTPUT.parent}'. Details: {exc}"
             log.error(msg)
-            
             return
-            
-    
+
     log.info("Compiling script into .pex file")
-    session.run("uv", "run", "pex", "dist/*.whl", "-m", f"{SCRIPT_NAME}:{SCRIPT_ENTRYPOINT}", "-o", PEX_OUTPUT)
-    
+    try:
+        # Use glob to find all .whl files in the dist directory
+        whl_files = glob.glob("dist/*.whl")
+        if not whl_files:
+            log.error("No .whl files found in the dist directory.")
+            return
+
+        session.run("pex", *whl_files, "-o", str(PEX_OUTPUT), "-m", PEX_MODULE_STR)
+    except Exception as exc:
+        msg = f"({type(exc)}) Error compiling script to .pex file. Details: {exc}"
+        log.error(msg)

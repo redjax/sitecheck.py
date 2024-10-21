@@ -1,5 +1,5 @@
 [project]
-name = "site-checker"
+name = "sitecheck"
 version = "0.1.0"
 description = "Python CLI for checking availability of a website."
 readme = "README.md"
