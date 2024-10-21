@@ -30,7 +30,7 @@ This message will remain up until that pipeline is finished.
 
 - Download the [`sitecheck.pex`](./release/sitecheck.pex) file from [`release/`](./release/).
   - This is a compiled, static binary with a CLI, so you can use it from the command line.
-  - It is cross platform, so it will work on Windows, Linux, and Mac. The Python binary and dependencies are all contained in the `.pex` binary.
+  - `.pex` binaries only work on Unix systems, Windows support is fleeting & limited. The `.pex` file for this project most likely does not work on Windows.
 - Run the `.pex` file like you would any other binary, i.e. `./sitecheck.pex --site https://www.google.com`.
 - See a help menu with `./sitecheck.pex --help`
 - Add it to your `$PATH` by placing the `.pex` somewhere on your `$PATH`
