@@ -173,9 +173,6 @@ def build_compile_pex(session: nox.Session) -> None:
     log.info("Ensure pex is installed")
     session.install("pex")
 
-    SCRIPT_PATH: Path = Path("./sitecheck.py")
-    SCRIPT_NAME: str = SCRIPT_PATH.stem
-    SCRIPT_ENTRYPOINT: str = "main"
     PEX_MODULE_STR: str = "sitecheck:main"
     PEX_OUTPUT: Path = Path("./release/sitecheck.pex")
 
