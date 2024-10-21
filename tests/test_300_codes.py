@@ -32,10 +32,10 @@ def test_fail_get_300_response(sleep_time: int, retry_times: int):
         f"Expected 300 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_300_response(sleep_time: int, retry_times: int):
@@ -49,10 +49,10 @@ def test_get_300_response(sleep_time: int, retry_times: int):
         f"Expected 300 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -67,10 +67,10 @@ def test_fail_head_300_response(sleep_time: int, retry_times: int):
         f"Expected 300 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_300_response(sleep_time: int, retry_times: int):
@@ -84,10 +84,10 @@ def test_head_300_response(sleep_time: int, retry_times: int):
         f"Expected 300 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 #######
@@ -105,10 +105,10 @@ def test_fail_get_301_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_301_response(sleep_time: int, retry_times: int):
@@ -122,10 +122,10 @@ def test_get_301_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -140,10 +140,10 @@ def test_fail_head_301_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_301_response(sleep_time: int, retry_times: int):
@@ -157,10 +157,10 @@ def test_head_301_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 #######
@@ -178,10 +178,10 @@ def test_fail_get_302_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_302_response(sleep_time: int, retry_times: int):
@@ -195,10 +195,10 @@ def test_get_302_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -213,10 +213,10 @@ def test_fail_head_302_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_302_response(sleep_time: int, retry_times: int):
@@ -230,10 +230,10 @@ def test_head_302_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 #######
@@ -251,10 +251,10 @@ def test_fail_get_303_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_303_response(sleep_time: int, retry_times: int):
@@ -268,10 +268,10 @@ def test_get_303_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -286,10 +286,10 @@ def test_fail_head_303_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_303_response(sleep_time: int, retry_times: int):
@@ -303,10 +303,10 @@ def test_head_303_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 #######
@@ -324,10 +324,10 @@ def test_fail_get_304_response(sleep_time: int, retry_times: int):
         f"Expected 304 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_304_response(sleep_time: int, retry_times: int):
@@ -341,10 +341,10 @@ def test_get_304_response(sleep_time: int, retry_times: int):
         f"Expected 304 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -359,10 +359,10 @@ def test_fail_head_304_response(sleep_time: int, retry_times: int):
         f"Expected 304 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_304_response(sleep_time: int, retry_times: int):
@@ -376,10 +376,10 @@ def test_head_304_response(sleep_time: int, retry_times: int):
         f"Expected 304 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 #######
@@ -397,10 +397,10 @@ def test_fail_get_307_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_307_response(sleep_time: int, retry_times: int):
@@ -414,10 +414,10 @@ def test_get_307_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -432,10 +432,10 @@ def test_fail_head_307_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_307_response(sleep_time: int, retry_times: int):
@@ -449,10 +449,10 @@ def test_head_307_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 #######
@@ -470,10 +470,10 @@ def test_fail_get_308_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_get_308_response(sleep_time: int, retry_times: int):
@@ -487,10 +487,10 @@ def test_get_308_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 @pytest.mark.xfail
@@ -505,10 +505,10 @@ def test_fail_head_308_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
 
 
 def test_head_308_response(sleep_time: int, retry_times: int):
@@ -522,7 +522,7 @@ def test_head_308_response(sleep_time: int, retry_times: int):
         f"Expected 200 response code, got: {res['status_code']}"
     )
 
-    print(
-        f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
-    )
-    time.sleep(sleep_time)
+    # print(
+    #     f"Sleep for {sleep_time} second(s) after request to avoid spamming http.codes/ site."
+    # )
+    # time.sleep(sleep_time)
