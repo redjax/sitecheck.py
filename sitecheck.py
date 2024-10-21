@@ -167,6 +167,23 @@ class ConnectionManager:
             )
 
 
+def setup_logging(
+    level: str = "INFO",
+    fmt: str = "%(asctime)s | [%(levelname)s] | line:%(lineno)s > %(message)s",
+    datefmt: str = "%Y-%m-%dT%H:%M:%S",
+    silence_loggers: list[str] = [],
+):
+    logging.basicConfig(
+        level=level.upper(),
+        format=fmt,
+        datefmt=datefmt,
+    )
+
+    if silence_loggers:
+        for logger in silence_loggers:
+            logging.getLogger(logger).setLevel("WARNING")
+
+
 def parse_args() -> argparse.Namespace:
     """Parse CLI args passed to the script."""
 
@@ -230,6 +247,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args: argparse.Namespace = parse_args()
 
+    setup_logging()
+
     ## Create an instance of ConnectionManager with headers and body
     headers: dict[str, str] = {"Content-Type": "application/json"}
     ## Load body from JSON string, if provided
@@ -260,10 +279,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level="INFO",
-        format="%(asctime)s | [%(levelname)s] | line:%(lineno)s > %(message)s",
-        datefmt=("%Y-%m-%dT%H:%M:%S"),
-    )
+    setup_logging(level="DEBUG")
 
     main()
